@@ -96,8 +96,6 @@ class Game {
         .prepare('SELECT state FROM boards WHERE game_id = :id;')
         .get({ id: id });
 
-      if(!getGame) throw new Error('We were not able to restore this game. Please start a new one.');
-
       const game = JSON.parse(getGame.state);
 
       if (game.state.length !== 32)
@@ -368,7 +366,7 @@ class Game {
   }
 
   getPlayerId(playerName) {
-    for(let i = 0; i < 2; i++){
+    for(i = 0; i < 2; i++){
       if(this.players[i] === playerName) return i;
     }
 

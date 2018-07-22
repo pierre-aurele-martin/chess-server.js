@@ -30,9 +30,9 @@ or `npm run dev` will launch you a [nodemon](https://github.com/remy/nodemon) on
     POST /api/start?name=Pierrot
     POST /api/join?id=:id&name=Lucas
     POST /api/party/:id/move?playerName=Pierrot&from=F2&to=F4
-    POST /api/party/:id/move?playerName=Lucas&from=E7&to=E6
+    POST /api/party/:id/move?playerName=&from=E7&to=E6
     POST /api/party/:id/move?playerName=Pierrot&from=G2&to=G4
-    POST /api/party/:id/move?playerName=Lucas&from=D8&to=H4
+    POST /api/party/:id/move?playerName=&from=D8&to=H4
     
 **Checkmate, Lucas win**
 

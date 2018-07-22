@@ -197,8 +197,9 @@ class Game {
     this.updateOccupied(playerId, from, to);
     this.recalculatePotentials(playerId);
 
-    //I need to recalcultate my adversary Little potentials too as it's dependent of my own pawns position
-    this.recalculatePotentials(advId, true)
+    //I need to recalcultate my adversary potentials too as it's dependent of my own pawns position
+    /* Exemple as reminder, a tower might have been block by a little and now have free way */
+    this.recalculatePotentials(advId)
 
     if (pawn.type === 'King') this.kingPositions[playerId] = pawn.position;
     //We update the game state
@@ -256,15 +257,15 @@ class Game {
       }
     }
 
-    /* Now I'll loop through my opponents potentiels - that I must recalculate - to see if he can do something */
+    /* Now I'll loop through my opponents potentiels - that are already recalculate - to see if he can do something */
     /* 
      Three ways to escape :
       - move the king: recalculate advKing potentials movement and make sure they are not in any other potentials I have
       - destroy my piece: does adv Pawns have my new position in potential ?
       - move an other piece in the way : only if check was made with Queen, Tower or Jack ???
     */
-
-    this.recalculatePotentials(advId, false, true, pawn => {
+    for (let i = 0; i < 16; i++) {
+      const pawn = advId > 0 ? sorted[i] : this.state[i];
       switch (pawn.type) {
         case 'King':
           for (let option in pawn.potentials) {
@@ -276,21 +277,21 @@ class Game {
         case 'Queen':
         case 'Tower':
         case 'Horse':
-          /* TODO : I need to know the attacking pawn here !
-           How to calculate if one of his pawns could get in the way of the attacking pawn and the King ?
-         */
+        /* TODO : I need to know the attacking pawn here !
+         How to calculate if one of his pawns could get in the way of the attacking pawn and the King ?
+       */
         default:
           /* Can one of the advPawns take this or another  pawn that is threating the King ? */
           for (let option in pawn.potentials) {
             //Then I can kill the threat
-            if (option === attackingPawn.position){
+            if (option === attackingPawn.position) {
               adversaryMustdo.push(pawn.position + ':' + option);
             }
           }
           /* TODO : How could I efficienly calculate if killing any other pawn would free a slot for the King ? */
           break;
-      }
-    });
+      }  
+    }
 
     if (adversaryMustdo.length === 0) {
       this.checkMate(playerId);
@@ -306,16 +307,10 @@ class Game {
     console.log('CHECK MATE !');
   }
 
-  recalculatePotentials(playerId, littleOnly = false, headsOnly = false, callback = false) {    
+  recalculatePotentials(playerId) {    
     for (let i = playerId < 1 ? 0 : 16; i < (playerId < 1 ? 16 : 32); i++) {
       const pawn = this.state[i];
-      if(littleOnly && pawn.type !== 'Little') continue;
-      if(headsOnly && pawn.type === 'Little') continue;
-
       pawn.setPotentialsMovements(this.occupied);
-      if (callback) {
-        callback(pawn);
-      }
     }
   }
 

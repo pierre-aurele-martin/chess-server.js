@@ -25,6 +25,7 @@ Just clone this repo and run `npm install` !
 ## Run
 Just run `npm start` with a valid `process.env.PORT` 
 or `npm run dev` will launch you a [nodemon](https://github.com/remy/nodemon) on `:3000`
+or **try it online [here](https://play-chess.now.sh)**
 
 ### Run a full game 
 

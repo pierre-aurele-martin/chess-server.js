@@ -12,6 +12,7 @@ All code is commented, feel free to contribute / show me better solutions :)
 [Chess rules \[FR\]](https://fr.wikipedia.org/wiki/%C3%89checs#%C3%89checs_et_informatique)
 
 PS: The sqlite database is wrote in memory. Which mean everything is lose when the server restart.
+PS2: Error are not sent back by Express for some reason. While I fix it, console / log is your friend :)
 
 ## Install
 Just clone this repo and run `npm install` !
@@ -30,9 +31,9 @@ or `npm run dev` will launch you a [nodemon](https://github.com/remy/nodemon) on
     POST /api/start?name=Pierrot
     POST /api/join?id=:id&name=Lucas
     POST /api/party/:id/move?playerName=Pierrot&from=F2&to=F4
-    POST /api/party/:id/move?playerName=&from=E7&to=E6
+    POST /api/party/:id/move?playerName=Lucas&from=E7&to=E6
     POST /api/party/:id/move?playerName=Pierrot&from=G2&to=G4
-    POST /api/party/:id/move?playerName=&from=D8&to=H4
+    POST /api/party/:id/move?playerName=Lucas&from=D8&to=H4
     
 **Checkmate, Lucas win**
 

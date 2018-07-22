@@ -1,5 +1,3 @@
-const test = require('../test');
-
 module.exports = router => {
   router.use(function(req, res, next) {
     // do logging
@@ -8,7 +6,6 @@ module.exports = router => {
   });
 
   router.get('/', (req, res) => {
-    const bah = test();
     res.json('Welcome to chess game API :)');
   });
 

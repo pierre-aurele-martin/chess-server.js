@@ -11,6 +11,8 @@ All code is commented, feel free to contribute / show me better solutions :)
 
 [Chess rules \[FR\]](https://fr.wikipedia.org/wiki/%C3%89checs#%C3%89checs_et_informatique)
 
+PS: The sqlite database is wrote in memory. Which mean everything is lose when the server restart.
+
 ## Install
 Just clone this repo and run `npm install` !
 

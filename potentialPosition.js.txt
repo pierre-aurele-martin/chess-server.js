@@ -1,0 +1,196 @@
+
+//Move sequence 
+move() {
+  if(next in Potentials) {
+    updateCurrent(this, next);
+    const NP = getNewPotentials(this);
+
+    const Check = indexOf(adversaryKingPosition, NP);
+    
+    if(Check > -1){
+      const forcedAdversaryMoves = [];
+      //je bouge le roi
+      const kingPotentials = getAdversaryKingPotentailsPosition();
+      for(let i = 0; i < kingPotentials.length, i++){
+        if(indexOf(kingPotentials[i], NP)){
+          forcedAdversaryMoves.push(['king', kingPotentials[i]]);
+        }
+      }
+
+      //ou je protège le roi
+      for(let i = 0; i <= myAdversaryPawn.length; i++){
+        let potentials = myAdversaryPawn[i].potentialsMove;
+        for(let y = 0; y <= potentials.length; y++){
+          if (indexOf(potentials[y], NP)) {
+            forcedAdversaryMoves.push(myAdversaryPawn[i], potentials[y]);
+          }
+        }
+      }
+
+      if(forcedAdversaryMoves.length < 1){
+        //CHECK MATE
+      }else{
+        return forcedAdversaryMoves;
+      }
+      
+    }//checkEnd
+  }else {
+    throw IllegalMove;
+  }
+}
+//Regular setPositions
+Tower () {
+  const directions = {
+    'N': {'x':0, 'y':1, 'max':7},
+    'S': {'x':0, 'y':-1, 'max':7},
+    'E': {'x':-1, 'y':0, 'max':7},
+    'W': {'x':1, 'y':0, 'max':7},
+  }
+
+  getPositions (current) {
+    const potentials = [];
+    
+      ()current * this.directions {
+        if(desired in BOARD && desired.getPawn != MYCOLOR) {
+          potential.push(desired)
+        }
+      }
+
+      return potentials;
+  }
+}
+
+//Regular setPositions
+Jack () {
+  const directions : {
+    NW: {x:1, y:1, max:7},
+    SW: {x:1, y:-1, max:7},
+    SE: {x:-1, y:-1, max:7},
+    NE: {x:-1, y:1, max:7},
+  }
+
+  getPositions (current) {
+    const potentials = [];
+
+      ()current * this.directions {
+        if(desired in BOARD && desired.getPawn != MYCOLOR) {
+          potential.push(desired)
+        }
+      }
+
+      return potentials;
+  }
+}
+
+//Regular setPositions
+Horse () {
+  const directions : {
+    N: {x:1, y:2, max:1},
+    NW: {x:2, y:1, max:1},
+    W: {x:2, y:-1, max:1},
+    SW: {x:1, y:-2, max:1},
+    S: {x:-1, y:-2, max:1},
+    SE: {x:-2, y:-1, max:1},
+    E: {x:-2, y:1, max:1},
+    NE: {x:-1, y:2, max:1},
+  }
+
+  getPositions (current) {
+    const potentials = [];
+
+      ()current * this.directions {
+        if(desired in BOARD && desired.getPawn != MYCOLOR) {
+          potential.push(desired)
+        }
+      }
+
+      return potentials;
+  }
+}
+//Regular setPositions
+Queen () {
+  const directions : {
+    N: {x:0, y:1, max:7},
+    S: {x:0, y:-1, max:7},
+    E: {x:-1, y:0, max:7},
+    W: {x:1, y:0, max:7},
+    NW: {x:1, y:1, max:7},
+    SW: {x:1, y:-1, max:7},
+    SE: {x:-1, y:-1, max:7},
+    NE: {x:-1, y:1, max:7},
+  }
+
+  getPositions (current) {
+    const potentials = [];
+
+      ()current * this.directions {
+        if(desired in BOARD && desired.getPawn != MYCOLOR) {
+          potential.push(desired)
+        }
+      }
+
+      return potentials;
+  }
+}
+
+//Specific setPositions
+King () {
+  const directions = {
+    'N': {'x':0, 'y':1, 'max':1},
+    'S': {'x':0, 'y':-1, 'max':1},
+    'E': {'x':-1, 'y':0, 'max':1},
+    'W': {'x':1, 'y':0, 'max':1},
+    'NW': {'x':1, 'y':1, 'max':1},
+    'SW': {'x':1, 'y':-1, 'max':1},
+    'SE': {'x':-1, 'y':-1, 'max':1},
+    'NE': {'x':-1, 'y':1, 'max':1},
+  }
+
+  getPositions (current) {
+    const potentials = [];
+
+      ()current * this.directions {
+        if(desired in BOARD && desired.getPawn != MYCOLOR && desired != adversaryPOTENTIALS) {
+          potential.push(desired)
+        }
+      }
+
+      return potentials;
+  }
+}
+
+Pawn() {
+  const directions = {
+    'N': { 'x': 1, 'y': 0, 'max': 1 },
+  }
+
+  const attackDirections = {
+    'NE':  { 'x': 1, 'y': 1, 'max': 1 },
+    'NW': { 'x': 1, 'y': -1, 'max': 1 },
+  }
+
+  const startDirections = {
+    'N': { 'x': 2, 'y': 0, 'max': 1},
+  }
+
+  getPositions(current) {
+    const potentials = [];
+    const forbidden = [];
+
+    const pawnDirections = this.hasMove ? directions : startDirections;
+
+    ()current * pawnDirections{
+      if (desired in BOARD && (desired.isEmpty || desired.getPawn != MYCOLOR)) {
+        potential.push(desired)
+      }
+    }
+
+    ()current * attackDirections{
+      if (desired in BOARD && (desired.isEmpty || desired.getPawn === AdversaryPosition)) {
+        potential.push(desired)
+      }
+    }
+
+    return potentials;
+  }
+}

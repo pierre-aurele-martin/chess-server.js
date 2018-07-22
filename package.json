@@ -1,0 +1,22 @@
+{
+  "name": "chess-server",
+  "version": "0.0.1",
+  "description": "So you wanna play chess ?",
+  "main": "index.js",
+  "scripts": {
+    "dev": "PORT=3000 nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chess",
+    "api"
+  ],
+  "author": "Pierre Aurèle Martin",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "better-sqlite3": "^4.1.4",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}

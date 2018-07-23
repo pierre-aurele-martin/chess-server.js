@@ -199,7 +199,7 @@ class Game {
 
     //I need to recalcultate my adversary potentials too as it's dependent of my own pawns position
     /* Exemple as reminder, a tower might have been block by a little and now have free way */
-    this.recalculatePotentials(advId)
+    this.recalculatePotentials(advId);
 
     if (pawn.type === 'King') this.kingPositions[playerId] = pawn.position;
     //We update the game state
@@ -233,23 +233,18 @@ class Game {
   }
 
   check(attackingPawnIndex) {
-
     const attackingPawn = this.state[attackingPawnIndex];
     const playerId = attackingPawn.playerId;
     const advId = playerId === 0 ? 1 : 0;
-    var sorted;
-    if (playerId > 0) {
-      sorted = this.state.sort((a, b) => {
-        if (a.playerId < b.playerId) return 1;
-        else return -1;
-      });
-    }
+
+    const myStartI = playerId < 1 ? 0 : 16;
+    const advStartI = playerId < 1 ? 16 : 0;
 
     /* Here I should not use a hash as it prevents me to get if one position can be attack by two pawns */
     var playerPotentials = {};
     const adversaryMustdo = [];
     /* Reducing complexity by two - I need to start by my Pawns to get all Potential positions */
-    for (let i = 0; i < 16; i++) {
+    for (let i = myStartI; i < (myStartI + 16); i++) {
       const pawn = playerId > 0 ? sorted[i] : this.state[i];
       if (pawn.type !== 'King') {
         //I don't think the King can attack the other King...
@@ -264,7 +259,7 @@ class Game {
       - destroy my piece: does adv Pawns have my new position in potential ?
       - move an other piece in the way : only if check was made with Queen, Tower or Jack ???
     */
-    for (let i = 0; i < 16; i++) {
+    for (let i = advStartI; i < (advStartI + 16); i++) {
       const pawn = advId > 0 ? sorted[i] : this.state[i];
       switch (pawn.type) {
         case 'King':
@@ -290,13 +285,13 @@ class Game {
           }
           /* TODO : How could I efficienly calculate if killing any other pawn would free a slot for the King ? */
           break;
-      }  
+      }
     }
 
     if (adversaryMustdo.length === 0) {
       this.checkMate(playerId);
     } else {
-      this.mustDo[advId] =adversaryMustdo;
+      this.mustDo[advId] = adversaryMustdo;
     }
   }
 
@@ -307,7 +302,7 @@ class Game {
     console.log('CHECK MATE !');
   }
 
-  recalculatePotentials(playerId) {    
+  recalculatePotentials(playerId) {
     for (let i = playerId < 1 ? 0 : 16; i < (playerId < 1 ? 16 : 32); i++) {
       const pawn = this.state[i];
       pawn.setPotentialsMovements(this.occupied);
@@ -351,18 +346,17 @@ class Game {
     }
   }
 
-  findIndexWithPosition(playerId, position){
-    
+  findIndexWithPosition(playerId, position) {
     for (let i = playerId < 1 ? 0 : 16; i < (playerId < 1 ? 16 : 32); i++) {
       const pawn = this.state[i];
-      if(position === pawn.position) return i;
+      if (position === pawn.position) return i;
     }
     throw new Error('The position from in input doesnt match any pawns.');
   }
 
   getPlayerId(playerName) {
-    for(let i = 0; i < 2; i++){
-      if(this.players[i] === playerName) return i;
+    for (let i = 0; i < 2; i++) {
+      if (this.players[i] === playerName) return i;
     }
 
     throw new Error('Please make sure your name is in this game !');
